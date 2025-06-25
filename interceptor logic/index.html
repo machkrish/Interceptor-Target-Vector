@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Tracking & Interception System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-color-scheme="dark">
+    
+    <header class="header">
+        <div class="header__title">
+            <h1>Tracking & Interception System</h1>
+        </div>
+        <div class="header__status">
+            <div class="status-indicator">
+                <span class="status-dot" id="systemStatus"></span>
+                <span id="systemStatusText">System Ready</span>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot" id="connectionStatus"></span>
+                <span>Connected</span>
+            </div>
+            <div class="fps-counter">
+                FPS: <span id="fpsCounter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+       
+        <section class="video-panel">
+            <div class="panel-header">
+                <h2>Video Feed</h2>
+                <div class="detection-count">
+                    Detections: <span id="detectionCount">0</span>
+                </div>
+            </div>
+            
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <div class="video-overlay">
+                        <div class="detection-box" id="detectionBox" style="display: none;"></div>
+                    </div>
+                    <div class="video-status">Camera Feed Simulation</div>
+                </div>
+            </div>
+
+            <div class="video-controls">
+                <div class="control-group">
+                    <label class="form-label">Confidence Threshold</label>
+                    <div class="slider-container">
+                        <input type="range" id="confidenceSlider" min="0.1" max="1.0" step="0.1" value="0.4" class="slider">
+                        <span id="confidenceValue">0.4</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="form-label">Target Classes</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Bird
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Airplane
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Kite
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Sports Ball
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn--primary btn--lg" id="trackingToggle">Start Tracking</button>
+            </div>
+        </section>
+
+        <section class="interceptor-panel">
+            <div class="panel-header">
+                <h2>Interceptor Visualization</h2>
+                <div class="distance-indicator">
+                    Distance: <span id="distanceValue">--</span>px
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="trackingCanvas" width="640" height="480"></canvas>
+                <div class="canvas-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot target"></span>
+                        Target
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot interceptor"></span>
+                        Interceptor
+                    </div>
+                </div>
+            </div>
+
+            <div class="interceptor-controls">
+                <div class="control-group">
+                    <label class="form-label">Interceptor Speed</label>
+                    <div class="slider-container">
+                        <input type="range" id="speedSlider" min="1" max="10" step="0.5" value="5" class="slider">
+                        <span id="speedValue">5.0</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="form-label">Interception Range</label>
+                    <div class="slider-container">
+                        <input type="range" id="rangeSlider" min="10" max="50" step="5" value="20" class="slider">
+                        <span id="rangeValue">20</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="control-panel">
+        <div class="system-controls">
+            <button class="btn btn--primary" id="startSystem">Start System</button>
+            <button class="btn btn--secondary" id="stopSystem">Stop System</button>
+            <button class="btn btn--outline" id="resetSystem">Reset</button>
+            <button class="btn btn--error" id="emergencyStop">Emergency Stop</button>
+        </div>
+
+        <div class="metrics-display">
+            <div class="metric-item">
+                <label>Target Position:</label>
+                <span id="targetCoords">---, ---</span>
+            </div>
+            <div class="metric-item">
+                <label>Interceptor Position:</label>
+                <span id="interceptorCoords">---, ---</span>
+            </div>
+            <div class="metric-item">
+                <label>System Uptime:</label>
+                <span id="uptime">00:00:00</span>
+            </div>
+            <div class="metric-item">
+                <label>Processing FPS:</label>
+                <span id="processingFps">0</span>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <div class="settings-tabs">
+                <button class="tab-button active" data-tab="detection">Detection</button>
+                <button class="tab-button" data-tab="interceptor">Interceptor</button>
+                <button class="tab-button" data-tab="display">Display</button>
+            </div>
+
+            <div class="tab-content active" id="detection-tab">
+                <div class="setting-row">
+                    <label>IoU Threshold:</label>
+                    <div class="slider-container">
+                        <input type="range" id="iouSlider" min="0.1" max="1.0" step="0.1" value="0.5" class="slider">
+                        <span id="iouValue">0.5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="interceptor-tab">
+                <div class="setting-row">
+                    <label>Behavior Mode:</label>
+                    <select class="form-control">
+                        <option>Pursuit</option>
+                        <option>Intercept</option>
+                        <option>Patrol</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tab-content" id="display-tab">
+                <div class="setting-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showTrails" checked> Show Trails
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>Update Rate:</label>
+                    <div class="slider-container">
+                        <input type="range" id="updateRateSlider" min="10" max="60" step="10" value="30" class="slider">
+                        <span id="updateRateValue">30</span> FPS
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
