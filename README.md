@@ -3,7 +3,7 @@
 This is a front-end simulation, built entirely using HTML, CSS, and JavaScript. It showcases the logic behind detecting a target, launching an interceptor, and dynamically tracking and colliding with it, all in a visual, browser-based environment.
 
 
-## 🚀 What It Does
+## What It Does
 
 Imagine a hostile drone enters restricted airspace. Our logic simulates:
 
