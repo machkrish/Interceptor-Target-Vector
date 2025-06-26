@@ -1,18 +1,18 @@
 # 🛡️ Interceptor-Target-Vector Logic (HTML, CSS, JS)
 
-This is a front-end simulation, built entirely using HTML, CSS, and JavaScript. It showcases the logic behind detecting a target, launching an interceptor, and dynamically tracking and colliding with it — all in a visual, browser-based environment.
+This is a front-end simulation, built entirely using HTML, CSS, and JavaScript. It showcases the logic behind detecting a target, launching an interceptor, and dynamically tracking and colliding with it, all in a visual, browser-based environment.
 
 
 ## 🚀 What It Does
 
 Imagine a hostile drone enters restricted airspace. Our logic simulates:
 
-- 📡 **Detection** of the intruder (manually or through code trigger)
-- 🎯 **Launch** of an interceptor drone
+- 📡 **Detection** of the intruder 
+- 🎯 **Launch** of an interceptor 
 - 🧭 **Dynamic tracking** of the target (with changing coordinates)
 - 💥 **Collision course** logic to intercept and eliminate
 
-No real hardware or backend is involved — this is purely logic and visualization in action!
+No real hardware or backend is involved. This is purely logic and visualization in action!
 
 ## 🧠 How It Works
 
